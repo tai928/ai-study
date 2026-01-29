@@ -4,16 +4,25 @@ from openai import OpenAI
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 messages = [
-    {"role": "system", "content": "You are a friendly assistant who talks politely in Japanese."}
+    {
+        "role": "system",
+        "content": """
+You are a kind and supportive 상담 AI.
+You always listen carefully.
+You speak in gentle Japanese.
+You never judge.
+You give warm and practical advice.
+"""
+    }
 ]
 
-print("AIと会話できます。終わるときは exit と入力してね😊")
+print("🌸 相談AIへようこそ。いつでも話してね。終わるときは exit 😊")
 
 while True:
     user = input("あなた: ")
 
     if user == "exit":
-        print("AI: またね！")
+        print("AI: 話してくれてありがとう。またいつでも来てね💙")
         break
 
     messages.append({"role": "user", "content": user})
@@ -23,8 +32,8 @@ while True:
         input=messages
     )
 
-    ai_reply = response.output_text
+    reply = response.output_text
 
-    print("AI:", ai_reply)
+    print("AI:", reply)
 
-    messages.append({"role": "assistant", "content": ai_reply})
+    messages.append({"role": "assistant", "content": reply})
