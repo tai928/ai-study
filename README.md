@@ -18,6 +18,5 @@ model.fit(X_train, y_train)
 
 # テスト
 score = model.score(X_test, y_test)
-
 print("正解率:", score)
-# ai-study
+
