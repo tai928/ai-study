@@ -1,13 +1,30 @@
+import os
 from openai import OpenAI
 
-client = OpenAI(api_key="YOUR_KEY")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-response = client.chat.completions.create(
-    model="gpt-4o-mini",
-    messages=[
-        {"role":"system","content":"You are a helpful assistant"},
-        {"role":"user","content":"こんにちは"}
-    ]
-)
+messages = [
+    {"role": "system", "content": "You are a friendly assistant who talks politely in Japanese."}
+]
 
-print(response.choices[0].message.content)
+print("AIと会話できます。終わるときは exit と入力してね😊")
+
+while True:
+    user = input("あなた: ")
+
+    if user == "exit":
+        print("AI: またね！")
+        break
+
+    messages.append({"role": "user", "content": user})
+
+    response = client.responses.create(
+        model="gpt-4.1-mini",
+        input=messages
+    )
+
+    ai_reply = response.output_text
+
+    print("AI:", ai_reply)
+
+    messages.append({"role": "assistant", "content": ai_reply})
