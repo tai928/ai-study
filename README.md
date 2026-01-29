@@ -1,22 +1,13 @@
-from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
+from openai import OpenAI
 
-# データ読み込み
-data = load_iris()
-X = data.data
-y = data.target
+client = OpenAI(api_key="YOUR_KEY")
 
-# 分ける
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role":"system","content":"You are a helpful assistant"},
+        {"role":"user","content":"こんにちは"}
+    ]
+)
 
-# AI作成
-model = RandomForestClassifier()
-
-# 覚えさせる
-model.fit(X_train, y_train)
-
-# テスト
-score = model.score(X_test, y_test)
-print("正解率:", score)
-
+print(response.choices[0].message.content)
